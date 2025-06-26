@@ -5,26 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CYBER GUARD</title>
     <style>
-        /* * General Styling & Dark Theme
-         */
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #1a1a1a; /* Darker background */
-            color: #f0f0f0; /* Light text */
+            background-color: #1a1a1a; 
+            color: #f0f0f0; 
             margin: 0;
             padding: 24px;
             line-height: 1.6;
         }
 
-        /* * Main container for the dashboard elements 
-         */
+        
         .dashboard-container {
             max-width: 1800px;
             margin: 0 auto;
         }
 
-        /* * Header section with title 
-         */
+        
         header {
             text-align: center;
             margin-bottom: 32px;
@@ -33,28 +30,26 @@
         }
 
         header h1 {
-            color: #58a6ff; /* A shade of blue */
+            color: #58a6ff; 
             margin: 0;
             font-size: 2.5em;
             font-weight: 300;
         }
 
         header p {
-            color: #8b949e; /* Grey for subtitle */
+            color: #8b949e; 
             margin-top: 8px;
             font-size: 1.1em;
         }
 
-        /* * Grid layout for the two log columns
-         */
+        
         .logs-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 24px;
         }
 
-        /* * Styling for the individual log containers (cards)
-         */
+        
         .log-box {
             background-color: #2c2c2c;
             border: 1px solid #444;
@@ -74,10 +69,9 @@
             font-weight: 500;
         }
 
-        /* * The scrollable area for log content
-         */
+        
         .log-content {
-            height: 65vh; /* Taller log view */
+            height: 65vh; 
             overflow-y: auto;
             background-color: #161616;
             padding: 15px;
@@ -86,11 +80,10 @@
             font-size: 0.9em;
             white-space: pre-wrap;
             word-wrap: break-word;
-            flex-grow: 1; /* Allows the box to fill the container */
+            flex-grow: 1; 
         }
         
-        /* * Custom scrollbar for a modern look
-         */
+       
         .log-content::-webkit-scrollbar {
             width: 10px;
         }
@@ -106,31 +99,25 @@
             background-color: #777;
         }
 
-        /* * Base style for each line in the log
-         */
+        
         .log-line {
             display: block;
             padding: 3px 0;
         }
 
-        /* * Color coding for POX controller log levels 
-         */
-        .log-warning { color: #f39c12; } /* Orange for WARNING */
-        .log-info { color: #3498db; }    /* Blue for INFO */
-        .log-error { color: #e74c3c; }   /* Red for ERROR */
-        .log-active { color: #2ecc71; font-weight: bold; } /* Green for ACTIVE */
-
-        /* * Color coding for Cowrie honeypot events
-         */
-        .log-connection { color: #2ecc71; } /* Green for new connections */
-        .log-command { color: #f0f0f0; }    /* Default text color for commands */
-        .log-command-prompt { color: #888; margin-right: 8px; } /* Grey for prompts like IP addresses */
         
-        /* * Responsive design: On smaller screens, stack the log columns
-         */
+        .log-warning { color: #f39c12; } 
+        .log-info { color: #3498db; }    
+        .log-error { color: #e74c3c; }  
+        .log-active { color: #2ecc71; font-weight: bold; } 
+
+        
+        .log-connection { color: #2ecc71; } 
+        .log-command { color: #f0f0f0; }   
+        .log-command-prompt { color: #888; margin-right: 8px; } 
         @media (max-width: 1000px) {
             .logs-grid {
-                grid-template-columns: 1fr; /* Single column layout */
+                grid-template-columns: 1fr; 
             }
         }
     </style>
@@ -157,16 +144,13 @@
     </div>
 
     <script>
-        // This function runs when the page is fully loaded
+        
         document.addEventListener('DOMContentLoaded', function() {
-            fetchLogs(); // Fetch logs immediately on load
-            setInterval(fetchLogs, 3000); // And then refresh every 3 seconds
+            fetchLogs();
+            setInterval(fetchLogs, 3000); 
         });
 
-        /**
-         * Fetches log data from the Flask API endpoint and passes it to the
-         * rendering functions. Includes error handling for when the backend is not reachable.
-         */
+       
         async function fetchLogs() {
             try {
                 const response = await fetch('/api/logs');
@@ -185,14 +169,10 @@
             }
         }
 
-        /**
-         * Renders the controller logs into their designated view, applying
-         * color-coding based on keywords found in each log line.
-         * @param {string[]} logs - An array of log strings.
-         */
+       
         function renderControllerLogs(logs) {
             const logView = document.getElementById('controller-logs');
-            logView.innerHTML = ''; // Clear old logs to prepare for new ones
+            logView.innerHTML = '';
             if (logs.length === 0) {
                 logView.textContent = 'No controller events to display.';
                 return;
@@ -202,7 +182,7 @@
                 lineElement.className = 'log-line';
                 lineElement.textContent = line;
                 
-                // Apply color classes based on content
+                
                 if (line.includes('WARNING')) {
                     lineElement.classList.add('log-warning');
                 } else if (line.includes('ACTIVE')) {
@@ -216,14 +196,10 @@
             });
         }
 
-        /**
-         * Formats and renders the structured Cowrie logs, creating a more
-         * readable and visually distinct output for connections vs. commands.
-         * @param {object[]} logs - An array of Cowrie event objects.
-         */
+        
         function renderCowrieLogs(logs) {
             const logView = document.getElementById('cowrie-logs');
-            logView.innerHTML = ''; // Clear old logs
+            logView.innerHTML = ''; 
             if (logs.length === 0) {
                 logView.textContent = 'No honeypot activity to display.';
                 return;
@@ -232,7 +208,6 @@
                 const lineElement = document.createElement('span');
                 lineElement.className = 'log-line';
                 
-                // Format the timestamp to be more readable
                 const timestamp = `[${new Date(event.timestamp).toLocaleTimeString()}]`;
                 let formattedLog = '';
 
@@ -241,7 +216,6 @@
                     formattedLog = `${timestamp} New connection from ${event.src_ip} (session: ${event.session})`;
                 } else if (event.type === 'command') {
                     lineElement.classList.add('log-command');
-                    // Use innerHTML to render styled spans within the log line
                     formattedLog = `${timestamp} <span class="log-command-prompt">${event.src_ip} &gt;</span> ${event.input || "''"}`;
                 }
                 
