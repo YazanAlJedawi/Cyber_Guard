@@ -5,7 +5,7 @@ from pox.lib.addresses import IPAddr, EthAddr
 import time
 import logging
 import os
-import logging
+
 
 log_file = os.path.expanduser('~/pox/pox/controller.log')
 if os.path.exists(log_file):
@@ -13,7 +13,7 @@ if os.path.exists(log_file):
 
 file_handler = logging.FileHandler(log_file)
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-log = core.getLogger()  # Get root logger
+log = core.getLogger() 
 log.addHandler(file_handler)
 log.setLevel(logging.INFO)
 
@@ -258,7 +258,7 @@ class Security_Controller(object):
         # install reverse flow
         reverse = of.ofp_flow_mod()
         reverse.match.dl_type = ethernet.IP_TYPE
-        reverse.match.nw_proto = 6  # TCP
+        reverse.match.nw_proto = 6  
         reverse.match.nw_src = cowrie_ip
         reverse.match.nw_dst = original_ip.srcip
         reverse.match.tp_src = new_port
@@ -277,7 +277,6 @@ class Security_Controller(object):
         
 
     def _enforce_block(self, packet):
-        """Install flow to block malicious traffic."""
         msg = of.ofp_flow_mod()
         msg.match = of.ofp_match.from_packet(packet)
         msg.idle_timeout = 60  
