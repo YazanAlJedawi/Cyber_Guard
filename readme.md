@@ -18,6 +18,12 @@ Cyber Guard is a Software-Defined Networking (SDN) project that enhances network
 * `index.html`: Frontend UI displaying real-time logs, attack charts, and statistics.
 * `mini_topology.py`: Mininet topology including hosts, switch, controller, NAT, Cowrie, and dashboard services.
 
+
+## **Flow Diagram**
+
+![Visualization of Flow Diagram!](Flow_diagram.png)
+
+
 ## **Prerequisites**
 
 To run this project, you will need a Linux environment (preferably Ubuntu) with the following installed on your **host machine**:
